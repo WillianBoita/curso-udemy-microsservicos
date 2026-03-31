@@ -1,0 +1,76 @@
+services:
+  auth-db:
+    image: postgres:16-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: ${AUTH_POSTGRES_USER}
+      POSTGRES_PASSWORD: ${AUTH_POSTGRES_PASSWORD}
+      POSTGRES_DB: ${AUTH_POSTGRES_DB}
+    volumes:
+      - auth_db_data:/var/lib/postgresql/data
+
+  product-db:
+    image: postgres:16-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: ${PRODUCT_POSTGRES_USER}
+      POSTGRES_PASSWORD: ${PRODUCT_POSTGRES_PASSWORD}
+      POSTGRES_DB: ${PRODUCT_POSTGRES_DB}
+    volumes:
+      - product_db_data:/var/lib/postgresql/data
+
+  sales-db:
+    image: mongo:7
+    restart: unless-stopped
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: ${MONGO_INITDB_ROOT_USERNAME}
+      MONGO_INITDB_ROOT_PASSWORD: ${MONGO_INITDB_ROOT_PASSWORD}
+      MONGO_INITDB_DATABASE: ${MONGO_INITDB_DATABASE}
+    volumes:
+      - sales_db_data:/data/db
+
+  sales-rabbit:
+    image: rabbitmq:3-management
+    restart: unless-stopped
+    environment:
+      RABBITMQ_DEFAULT_USER: ${RABBIT_USER}
+      RABBITMQ_DEFAULT_PASS: ${RABBIT_PASS}
+    ports:
+      - "5505:15672"
+    volumes:
+      - sales_rabbit_data:/var/lib/rabbitmq
+
+  auth-api:
+    build: './auth-api'
+    restart: unless-stopped
+    ports:
+      - "9090:9090"
+    environment:
+      PORT: 9090
+
+  product-api:
+    build: './product-api'
+    restart: unless-stopped
+    ports:
+      - "9091:9091"
+    environment:
+      PORT: 9091
+
+  sales-api:
+    build: './sales-api'
+    restart: unless-stopped
+    ports:
+      - "9092:9092"
+    environment:
+      PORT: 9092
+
+volumes:
+  auth_db_data:
+  product_db_data:
+  sales_db_data:
+  sales_rabbit_data:
+
+networks:
+  default:
+    name: microsservicos-network
+    driver: bridge
