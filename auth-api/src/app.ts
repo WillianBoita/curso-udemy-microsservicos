@@ -1,21 +1,11 @@
 import 'dotenv/config';
 import Express from "express";
 
-/*const requiredEnvs = ['JWT_SECRET'] as const
-
-for (const key of requiredEnvs) {
-  if (!process.env[key]) {
-    throw new Error(`Variável de ambiente ausente: ${key}`)
-  }
-}*/
-
-export const env = {
-  port: Number(process.env.PORT ?? 9090),
-  jwtSecret: process.env.JWT_SECRET!,
-  nodeEnv: process.env.NODE_ENV ?? 'development',
-}
+import * as db from './config/db/initialData.js';
 
 const server = Express();
+
+db.createInitialData()
 
 server.get("/api/status", (req, res) => {
   res.status(200).json({
@@ -25,6 +15,6 @@ server.get("/api/status", (req, res) => {
   })
 })
 
-server.listen(env.port, () => {
-  console.log(`Servidor auth rodando em http://localhost:${env.port}`);
+server.listen(process.env.PORT, () => {
+  console.log(`Servidor auth rodando em http://localhost:${process.env.PORT}`);
 })
