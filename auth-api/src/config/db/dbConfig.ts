@@ -14,7 +14,7 @@ const sql = new sequelizeInstance(process.env.AUTH_DATABASE, process.env.AUTH_US
 })
 
 sql.authenticate().then(() => {
-  console.info('Conectou com sucesso')
+  console.info('\nConectou com sucesso')
 }).catch((err) => {
   console.error(err)
 })

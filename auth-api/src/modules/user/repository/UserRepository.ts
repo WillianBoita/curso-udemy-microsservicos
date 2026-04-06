@@ -1,7 +1,5 @@
 import User from "../model/User.js";
-import { UserProps } from "../../../types/types.js";
-
-type UserReturn = UserProps | null
+import { UserReturn } from "../../../types/types.js";
 
 class UserRepository {
 

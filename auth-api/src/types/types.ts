@@ -3,3 +3,5 @@ export interface UserProps {
   name: string,
   email: string
 }
+
+export type UserReturn = UserProps | null
