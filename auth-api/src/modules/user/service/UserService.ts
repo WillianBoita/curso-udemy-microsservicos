@@ -15,9 +15,11 @@ class UserService {
   async findByEmail(req: Request<Params>) {
     try {
       const email = req.params.email;
+      const { authUser } = req
       this.validateRequestData(email);
       const user = await UserRepository.findByEmail(email);
       this.validateUserNotFound(user);
+      this.validateAuthenticatedUser(user, authUser)
       return {
         status: 200,
         user: {
@@ -45,7 +47,12 @@ class UserService {
     if(!user){
       throw new UserException(404, "Usuário não encontrado");
     }
+  }
 
+  validateAuthenticatedUser(user: UserReturn, authUser: UserReturn) {
+    if(!authUser || user?.id !== authUser.id) {
+      throw new UserException(403, "Você não tem permissão para acessar.")
+    }
   }
 
   async getAccessToken(req: Request, res: Response) {
