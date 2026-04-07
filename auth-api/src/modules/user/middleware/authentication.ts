@@ -18,9 +18,10 @@ export default async function authentication(req: Request, res: Response, next: 
 
     return next();
   } catch (err: any) {
-    return {
-      status: err.status ? err.status : 500,
+    const status = err.status ? err.status : 500
+    return res.status(status).json({
+      status,
       message: err.message 
-    }
+    })
   }
 }
