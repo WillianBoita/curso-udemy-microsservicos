@@ -6,7 +6,13 @@ type Params = {
 }
 
 class UserController {
-  findByEmail = async (req: Request<Params>, res: Response) => {
+  
+  async getAccessToken (req: Request, res: Response) {
+    const user = await UserService.getAccessToken(req, res)
+    return res.status(user.status).json(user)
+  }
+
+  async findByEmail (req: Request<Params>, res: Response) {
     const user = await UserService.findByEmail(req)
     return res.status(user.status).json(user)
   }

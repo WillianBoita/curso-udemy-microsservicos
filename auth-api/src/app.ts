@@ -20,7 +20,7 @@ server.get("/api/status", (req, res) => {
   })
 })
 
-server.use('/api', UserRoutes);
+server.use(UserRoutes);
 
 server.listen(process.env.PORT, () => {
   console.log(`Servidor auth rodando em http://localhost:${process.env.PORT}`);

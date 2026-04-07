@@ -1,5 +1,9 @@
+import Jwt from "jsonwebtoken";
+import { Request, Response } from "express";
+import bcrypt from 'bcrypt'
+
+
 import UserRepository from "../repository/UserRepository.js";
-import { Request } from "express";
 import UserException from "../exception/UserException.js";
 import { UserReturn } from "../../../types/types.js";
 
@@ -10,10 +14,10 @@ type Params = {
 class UserService {
   async findByEmail(req: Request<Params>) {
     try {
-      const email = req.params.email
-      this.validateRequestData(email)
+      const email = req.params.email;
+      this.validateRequestData(email);
       const user = await UserRepository.findByEmail(email);
-      this.validateUserNotFound(user)
+      this.validateUserNotFound(user);
       return {
         status: 200,
         user: {
@@ -33,15 +37,51 @@ class UserService {
 
   validateRequestData(email: string) {
     if (!email) {
-      throw new UserException(400, "Email não informado")
+      throw new UserException(400, "Email não informado");
     }
   }
 
   validateUserNotFound(user: UserReturn){
     if(!user){
-      throw new UserException(404, "Usuário não encontrado")
+      throw new UserException(404, "Usuário não encontrado");
     }
 
+  }
+
+  async getAccessToken(req: Request, res: Response) {
+    try {
+      const { email, password } = req.body;
+      this.validateAccessTokenData(email, password);
+      const user = await UserRepository.findByEmail(email);
+      this.validateUserNotFound(user)
+      await this.validatePassword(password, user!.password)
+
+      const accessToken = Jwt.sign(user as object, process.env.JWT_SECRET, {expiresIn: '1d'});
+
+      return {
+        status: 200,
+        accessToken
+      }
+
+    } catch (err: any) {
+        return {
+          status: err.status ? err.status : 500,
+          message: err.message 
+        }
+    }
+    
+  }
+
+  validateAccessTokenData(email: string, password: string) {
+    if(!email || !password) {
+      throw new UserException(401, "Email e senha não informados.");
+    }
+  }
+
+  async validatePassword(password: string, hashPassword: string) {
+    if (!await bcrypt.compare(password, hashPassword)){
+      throw new UserException(401, "Credenciais inválidas.")
+    }
   }
 }
 
