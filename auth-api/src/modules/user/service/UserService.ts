@@ -49,8 +49,8 @@ class UserService {
     }
   }
 
-  validateAuthenticatedUser(user: UserReturn, authUser: UserReturn) {
-    if(!authUser || user?.id !== authUser.id) {
+  validateAuthenticatedUser(user: UserReturn, authUser: number) {
+    if(!authUser || user?.id !== authUser) {
       throw new UserException(403, "Você não tem permissão para acessar.")
     }
   }

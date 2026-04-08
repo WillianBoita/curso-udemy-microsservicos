@@ -14,8 +14,8 @@ export default async function authentication(req: Request, res: Response, next: 
     }
     
     const decoded = jwt.verify(token, process.env.JWT_SECRET!) as any;
-    req.authUser = decoded.authUser
-
+    req.authUser = decoded.id
+    
     return next();
   } catch (err: any) {
     const status = err.status ? err.status : 500
