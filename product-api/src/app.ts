@@ -1,22 +1,15 @@
 import 'dotenv/config';
 import Express from "express";
+import cors from 'cors'
 
-/*const requiredEnvs = ['JWT_SECRET'] as const
-
-for (const key of requiredEnvs) {
-  if (!process.env[key]) {
-    throw new Error(`Variável de ambiente ausente: ${key}`)
-  }
-}*/
-
-export const env = {
-  port: Number(process.env.PORT ?? 9091),
-  jwtSecret: process.env.JWT_SECRET!,
-  nodeEnv: process.env.NODE_ENV ?? 'development',
-}
+import * as db from './config/db/initialData.js';
 
 const server = Express();
 
+server.use(Express.json())
+server.use(cors())
+
+db.createInitialData()
 server.get("/api/status", (req, res) => {
   res.status(200).json({
     service: "Product-API",
@@ -25,6 +18,6 @@ server.get("/api/status", (req, res) => {
   })
 })
 
-server.listen(env.port, () => {
-  console.log(`Servidor product rodando em http://localhost:${env.port}`);
+server.listen(process.env.PORT, () => {
+  console.log(`Servidor product rodando em http://localhost:${process.env.PORT}`);
 })
