@@ -8,8 +8,7 @@ const Category = sql.define("category", {
     autoIncrement: true
   },
   description: {
-    type: sequelize.STRING,
-    allowNull: true
+    type: sequelize.STRING
   }
 }, {tableName: "Categories"})
 

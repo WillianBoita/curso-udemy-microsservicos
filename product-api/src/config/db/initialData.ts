@@ -6,9 +6,9 @@ export async function createInitialData() {
     await sql.sync({ force: true });
 
     const products = await Product.bulkCreate([
-      { name: "Pizza Calabresa" },
-      { name: "Pizza Mussarela" },
-      { name: "Pizza Frango" }
+      { name: "Pizza Calabresa", qtdAvailable: 4 },
+      { name: "Pizza Mussarela", qtdAvailable: 0 },
+      { name: "Pizza Frango", qtdAvailable: 3 }
     ]);
     
     const suppliers = await Supplier.bulkCreate([

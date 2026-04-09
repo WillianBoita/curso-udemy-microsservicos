@@ -9,7 +9,6 @@ const Supplier = sql.define("supplier", {
   },
   name: {
     type: sequelize.STRING,
-    allowNull: true
   }
 }, {tableName: "suppliers"})
 

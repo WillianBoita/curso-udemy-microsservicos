@@ -26,10 +26,11 @@ class ProductRepository {
     }
   }
 
-  async createProduct(name: string) {
+  async createProduct(name: string, qtdAvailable: number) {
     try {
       return await Product.create({
-        name
+        name,
+        qtdAvailable
       })
     } catch (err: any) {
       console.error(err.message)

@@ -9,7 +9,9 @@ const Product = sql.define("product", {
   },
   name: {
     type: sequelize.STRING,
-    allowNull: true
+  },
+  qtdAvailable: {
+    type: sequelize.INTEGER,
   },
 }, {tableName: "products"})
 

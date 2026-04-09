@@ -6,13 +6,13 @@ import ProductException from "../exception/ProductException.js";
 class ProductService {
   async addProduct(req: Request) {
     try {
-      const { name } =  req.body;
+      const { name, qtdAvailable } =  req.body;
       const exists = await ProductRepository.findByName(name);
       if(exists) {
         throw new ProductException(400, "Esse produto já existe.")
       }
 
-      const newProduct = await ProductRepository.createProduct(name)
+      const newProduct = await ProductRepository.createProduct(name, qtdAvailable)
 
       return {
         status: 201,
