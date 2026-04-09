@@ -1,12 +1,35 @@
-import Category from "../../models/Category.js";
+import Product from "../../models/Product.js";
 
 class ProductRepository {
 
+  async findByName(name: string) {
+    try {
+      return await Product.findOne({ 
+        where: { name },
+        raw: true 
+      })
+    } catch (err: any) {
+      console.error(err.message)
+      return null;
+    }
+  }
+
   async findById(id: number) {
     try {
-      return await Category.findOne({ 
+      return await Product.findOne({ 
         where: { id },
         raw: true 
+      })
+    } catch (err: any) {
+      console.error(err.message)
+      return null;
+    }
+  }
+
+  async createProduct(name: string) {
+    try {
+      return await Product.create({
+        name
       })
     } catch (err: any) {
       console.error(err.message)

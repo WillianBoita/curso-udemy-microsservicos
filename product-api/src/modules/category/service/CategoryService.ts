@@ -1,11 +1,28 @@
-import Jwt from "jsonwebtoken";
-import { Request, Response } from "express";
+import { Request } from "express";
 
-import ProductRepository from "../repository/CategoryRepository.js";
-import ProductException from "../exception/CategoryException.js";
+import CategoryRepository from "../repository/CategoryRepository.js";
+import CategoryException from "../exception/CategoryException.js";
 
-class UserService {
+class CategoryService {
+  async addCategory(req: Request) {
+    try {
+      const { name } =  req.body;
+      const exists = await CategoryRepository.findByName(name);
+      if(exists) {
+        throw new CategoryException(400, "Essa categoria já existe.")
+      }
 
+      const newCategory = await CategoryRepository.createCategory(name)
+
+      return {
+        status: 201,
+        newCategory
+      }
+      
+    } catch (err: any) {
+      throw new CategoryException(err.status, err.message)
+    }
+  }
 }
 
-export default new UserService();
+export default new CategoryService();

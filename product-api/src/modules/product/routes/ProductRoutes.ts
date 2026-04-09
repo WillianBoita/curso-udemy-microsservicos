@@ -1,12 +1,8 @@
 import Express from "express";
 import ProductController from "../controller/ProductController.js";
-import authentication from "../../middleware/authentication.js";
 
 const router = Express.Router();
-router.use(authentication)
 
-router.post('/api/user/auth', ProductController);
-
-router.get('/api/user/email/:email', ProductController);
+router.post('/api/product', ProductController.addProduct);
 
 export default router;

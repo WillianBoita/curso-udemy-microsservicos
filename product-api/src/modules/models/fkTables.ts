@@ -1,5 +1,5 @@
 import sequelize from "sequelize";
-import sql from "../../../config/db/dbConfig.js";
+import sql from "../../config/db/dbConfig.js";
 
 export const ProductCategory = sql.define('product_categories', {
   product_id: sequelize.INTEGER,

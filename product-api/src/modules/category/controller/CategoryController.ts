@@ -1,8 +1,11 @@
 import { Request, Response } from "express"
-import UserService from "../service/CategoryService.js"
+import CategoryService from "../service/CategoryService.js"
 
-class ProductController {
-
+class CategoryController {
+  async addCategory(req: Request, res: Response) {
+    const category = await CategoryService.addCategory(req)
+    return res.status(category.status).json(category)
+  }
 }
 
-export default new ProductController()
+export default new CategoryController()

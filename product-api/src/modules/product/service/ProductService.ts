@@ -1,11 +1,28 @@
-import Jwt from "jsonwebtoken";
-import { Request, Response } from "express";
+import { Request } from "express";
 
 import ProductRepository from "../repository/ProductRepository.js";
 import ProductException from "../exception/ProductException.js";
 
-class UserService {
+class ProductService {
+  async addProduct(req: Request) {
+    try {
+      const { name } =  req.body;
+      const exists = await ProductRepository.findByName(name);
+      if(exists) {
+        throw new ProductException(400, "Esse produto já existe.")
+      }
 
+      const newProduct = await ProductRepository.createProduct(name)
+
+      return {
+        status: 201,
+        newProduct
+      }
+      
+    } catch (err: any) {
+      throw new ProductException(err.status, err.message)
+    }
+  }
 }
 
-export default new UserService();
+export default new ProductService();

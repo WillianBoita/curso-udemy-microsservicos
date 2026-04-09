@@ -1,6 +1,18 @@
-import Category from "../model/Category.js";
+import Category from "../../models/Category.js";
 
-class ProductRepository {
+class CategoryRepository {
+
+  async findByName(name: string) {
+    try {
+      return await Category.findOne({ 
+        where: { description: name },
+        raw: true 
+      })
+    } catch (err: any) {
+      console.error(err.message)
+      return null;
+    }
+  }
 
   async findById(id: number) {
     try {
@@ -14,6 +26,17 @@ class ProductRepository {
     }
   }
 
+  async createCategory(description: string) {
+    try {
+      return await Category.create({
+        description
+      })
+    } catch (err: any) {
+      console.error(err.message)
+      return null;
+    }
+  }
+
 }
 
-export default new ProductRepository();
+export default new CategoryRepository();
