@@ -25,11 +25,36 @@ class CategoryRepository {
       return null;
     }
   }
+  
+  async findAll() {
+    try {
+      return await Category.findAll({
+       raw: true 
+      })
+    } catch (err: any) {
+      console.error(err.message)
+      return null;
+    }
+  }
 
   async createCategory(description: string) {
     try {
       return await Category.create({
         description
+      })
+    } catch (err: any) {
+      console.error(err.message)
+      return null;
+    }
+  }
+
+  async updateCategory(id: number, description: string) {
+    try {
+      return await Category.update({
+        description
+      },
+      {
+        where: {id}
       })
     } catch (err: any) {
       console.error(err.message)

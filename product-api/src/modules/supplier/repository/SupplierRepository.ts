@@ -26,10 +26,35 @@ class SupplierRepository {
     }
   }
 
+  async findAll() {
+    try {
+      return await Supplier.findAll({
+       raw: true 
+      })
+    } catch (err: any) {
+      console.error(err.message)
+      return null;
+    }
+  }
+
   async createSupplier(name: string) {
     try {
       return await Supplier.create({
         name
+      })
+    } catch (err: any) {
+      console.error(err.message)
+      return null;
+    }
+  }
+
+  async updateSupplier(id: number, name: string) {
+    try {
+      return await Supplier.update({
+        name
+      },
+      {
+        where: {id}
       })
     } catch (err: any) {
       console.error(err.message)
