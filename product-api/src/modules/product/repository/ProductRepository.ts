@@ -64,6 +64,17 @@ class ProductRepository {
     }
   }
 
+  async deleteProduct(id: number) {
+    try {
+      return await Product.destroy({
+        where: { id }
+      })
+    } catch (err: any) {
+      console.error(err.message)
+      return null;
+    }
+  }
+
 }
 
 export default new ProductRepository();

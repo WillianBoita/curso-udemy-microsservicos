@@ -87,7 +87,7 @@ class SupplierService {
       const updatedSupplier = await SupplierRepository.updateSupplier(formattedId, name);
 
       if(!updatedSupplier) {
-        throw new SupplierException(404, "Esse produto não existe")
+        throw new SupplierException(404, "Esse fornecedor não existe")
       }
 
       return {
@@ -99,6 +99,26 @@ class SupplierService {
     }
   }
 
+  async deleteSupplier(req: Request) {
+    try {
+      const { id } = req.params;
+      const formattedId = parseInt(id as string);
+      this.validateSupplierId(formattedId);
+
+      const deletedSupplier = await SupplierRepository.deleteSupplier(formattedId);
+
+      if (!deletedSupplier) {
+        throw new SupplierException(404, "Esse fornecedor não existe")
+      }
+
+      return {
+        status: 204
+      }
+    } catch (err: any) {
+      throw new SupplierException(err.status, err.message);
+    }
+  }
+ 
 
 }
 

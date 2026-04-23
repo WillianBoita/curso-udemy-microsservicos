@@ -105,6 +105,26 @@ class ProductService {
     }
   }
 
+  async deleteProduct(req: Request) {
+    try {
+      const { id } = req.params;
+      const formattedId = parseInt(id as string);
+      this.validateProductId(formattedId);
+
+      const deletedProduct = await ProductRepository.deleteProduct(formattedId);
+
+      if (!deletedProduct) {
+        throw new ProductException(404, "Esse produto não existe")
+      }
+
+      return {
+        status: 204
+      }
+    } catch (err: any) {
+      throw new ProductException(err.status, err.message);
+    }
+  }
+
 }
 
 export default new ProductService();

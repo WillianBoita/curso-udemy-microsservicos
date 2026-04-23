@@ -100,6 +100,26 @@ class CategoryService {
     }
   }
 
+  async deleteCategory(req: Request) {
+    try {
+      const { id } = req.params;
+      const formattedId = parseInt(id as string);
+      this.validateCategoryId(formattedId);
+
+      const deletedCategory = await CategoryRepository.deleteCategory(formattedId);
+
+      if (!deletedCategory) {
+        throw new CategoryException(404, "Essa categoria não existe")
+      }
+
+      return {
+        status: 204
+      }
+    } catch (err: any) {
+      throw new CategoryException(err.status, err.message);
+    }
+  }
+
 }
 
 export default new CategoryService();

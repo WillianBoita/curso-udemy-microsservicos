@@ -21,6 +21,11 @@ class SupplierController {
     const updatedSupplier = await SupplierService.updateSupplier(req);
     return res.status(updatedSupplier.status).json(updatedSupplier.updatedSupplier);
   }
+
+  async deleteSupplier(req: Request, res: Response) {
+    const deletedSupplier = await SupplierService.deleteSupplier(req);
+    return res.status(deletedSupplier.status);
+  }
 }
 
 export default new SupplierController()

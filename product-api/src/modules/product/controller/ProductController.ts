@@ -21,6 +21,11 @@ class ProductController {
     const updatedProduct = await ProductService.updateProduct(req);
     return res.status(updatedProduct.status).json(updatedProduct.updatedProduct);
   }
+
+  async deleteProduct(req: Request, res: Response) {
+    const deletedProduct = await ProductService.deleteProduct(req);
+    return res.status(deletedProduct.status);
+  }
 }
 
 export default new ProductController();

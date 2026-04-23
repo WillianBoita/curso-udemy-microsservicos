@@ -62,6 +62,17 @@ class SupplierRepository {
     }
   }
 
+  async deleteSupplier(id: number) {
+    try {
+      return await Supplier.destroy({
+        where: { id }
+      })
+    } catch (err: any) {
+      console.error(err.message)
+      return null;
+    }
+  }
+
 }
 
 export default new SupplierRepository();

@@ -62,6 +62,17 @@ class CategoryRepository {
     }
   }
 
+  async deleteCategory(id: number) {
+    try {
+      return await Category.destroy({
+        where: { id }
+      })
+    } catch (err: any) {
+      console.error(err.message)
+      return null;
+    }
+  }
+
 }
 
 export default new CategoryRepository();
