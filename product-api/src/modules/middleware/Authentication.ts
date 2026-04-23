@@ -1,8 +1,8 @@
 import { Request, Response, NextFunction } from 'express'
-import AuthException from '../middleware/AuthException.js'
+import AuthException from './AuthException.js'
 import jwt from 'jsonwebtoken'
 
-export default async function authentication(req: Request, res: Response, next: NextFunction) {
+export default async function Authentication(req: Request, res: Response, next: NextFunction) {
   try {
     const auth = req.headers?.authorization?.split(" ");
 

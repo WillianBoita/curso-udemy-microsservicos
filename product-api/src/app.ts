@@ -6,6 +6,7 @@ import * as db from './config/db/initialData.js';
 import categoryRouter from './modules/category/routes/CategoryRoutes.js';
 import productRouter from './modules/product/routes/ProductRoutes.js';
 import supplierRouter from './modules/supplier/routes/SupplierRoutes.js';
+import Authentication from './modules/middleware/Authentication.js';
 
 const server = Express();
 
@@ -20,6 +21,8 @@ server.get("/api/status", (req, res) => {
     httpStatus: 200
   })
 })
+
+server.use(Authentication)
 
 server.use(categoryRouter)
 server.use(productRouter)
