@@ -3,6 +3,7 @@ declare namespace NodeJS {
     AUTH_DATABASE: string
     AUTH_USER: string
     AUTH_PASSWORD: string
+    RABBIT_URL: string
     DB_PORT: number
     PORT: number
     JWT_SECRET: string

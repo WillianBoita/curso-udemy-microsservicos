@@ -36,7 +36,8 @@ services:
       RABBITMQ_DEFAULT_USER: ${RABBIT_USER}
       RABBITMQ_DEFAULT_PASS: ${RABBIT_PASS}
     ports:
-      - "5505:15672"
+      - "5505:5672"
+      - "5506:15672"
     volumes:
       - sales_rabbit_data:/var/lib/rabbitmq
 

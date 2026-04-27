@@ -1,4 +1,8 @@
+import { Model } from "sequelize";
 import Product from "../../models/Product.js";
+import { ProductProps } from "../../../types/types.js";
+
+type ProductModelType = Model<ProductProps> | null;
 
 class ProductRepository {
 
@@ -37,7 +41,7 @@ class ProductRepository {
     }
   } 
 
-  async createProduct(name: string, qtdAvailable: number) {
+  async createProduct(name: string, qtdAvailable: number): Promise<ProductModelType> {
     try {
       return await Product.create({
         name,
