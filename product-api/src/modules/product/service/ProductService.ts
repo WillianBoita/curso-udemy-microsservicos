@@ -1,6 +1,5 @@
 import { Request } from "express";
 
-import { publish } from "../../../rabbit/publisher.js";
 import ProductRepository from "../repository/ProductRepository.js";
 import ProductException from "../exception/ProductException.js";
 
@@ -26,12 +25,6 @@ class ProductService {
       if(!newProduct) {
         throw new ProductException(500, "Erro ao criar produto.");
       }
-
-      await publish('product.created', {
-        event: 'product.created',
-        productId: newProduct.dataValues.id,
-        name: newProduct.dataValues.name
-      });
 
       return {
         status: 201,
@@ -107,11 +100,6 @@ class ProductService {
         throw new ProductException(404, "Esse produto não existe")
       }
 
-      await publish('product.updated', {
-        event: 'product.updated',
-        productId: formattedId
-      });
-
       return {
         status: 200,
         updatedProduct
@@ -132,11 +120,6 @@ class ProductService {
       if (!deletedProduct) {
         throw new ProductException(404, "Esse produto não existe")
       }
-
-      await publish('product.deleted', {
-        event: 'product.deleted',
-        productId: formattedId
-      });
 
       return {
         status: 204
