@@ -1,8 +1,8 @@
 declare namespace NodeJS {
   interface ProcessEnv {
-    AUTH_DATABASE: string
-    AUTH_USER: string
-    AUTH_PASSWORD: string
+    PRODUCT_DATABASE: string
+    PRODUCT_USER: string
+    PRODUCT_PASSWORD: string
     RABBIT_URL: string
     DB_PORT: number
     PORT: number
